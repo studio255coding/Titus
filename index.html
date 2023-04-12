@@ -29,11 +29,21 @@
           }
       }
 
+      var magma = new THREE.PointLight(0xFFFFFF, 1, 500)
+      magma.position.set(0, 10, 0)
+scene.add(magma)
+
+    
       var render = function () {
         requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render()
+
+      $(document.body).keydown(function(evt){
+if(evt.keyCoode==38){
+  
+      })
   </script>
 </body>
 
