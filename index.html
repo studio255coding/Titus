@@ -4,16 +4,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
+
 <body>
   <script src="./three.js-dev/build/three.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
  <script>
-
+function setup(){
 const OakBoi = [
 "brown",
 0
  ]
-//const block o' c
+const block_o_c = []
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
@@ -24,15 +25,19 @@ const OakBoi = [
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    var totalCubes = 500;
+    var totalCubes = 50000;
         for(var i=0; i<Math.sqrt(totalCubes); i++){
           for(var j=0; j<Math.sqrt(totalCubes); j++){
+            var kh = (noise(i, j) * 800) + 450;
+            for(var hight = 0; height < kh; height++){
+
             var geometry = new THREE.BoxGeometry(1, 1, 1)
             var material = new THREE.MeshLambertMaterial({color: "green"})
             var cloud = new THREE.Mesh(geometry, material)
             cloud.position.x  = i;
             cloud.position.z = j;
             scene.add(cloud)
+            }
           }
       }
       var totalCubes = 500;
@@ -96,6 +101,7 @@ document.body.onmousemove = function(evt) {
       this.camera.position.y-=1;
     }
   };
+}
   </script>
 </body>
 
