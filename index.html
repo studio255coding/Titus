@@ -25,17 +25,16 @@ const block_o_c = []
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    var totalCubes = 50000;
+    var totalCubes = 50;
         for(var i=0; i<Math.sqrt(totalCubes); i++){
           for(var j=0; j<Math.sqrt(totalCubes); j++){
-            var kh = (noise(i, j) * 800) + 450;
-            for(var hight = 0; height < kh; height++){
-
+            for(var height = 0; height <= Math.ceil((noise(i*0.05, height*0.05, j*0.05) * 80) + 45); height++){
             var geometry = new THREE.BoxGeometry(1, 1, 1)
             var material = new THREE.MeshLambertMaterial({color: "green"})
             var cloud = new THREE.Mesh(geometry, material)
             cloud.position.x  = i;
             cloud.position.z = j;
+            cloud.position.y = height
             scene.add(cloud)
             }
           }
