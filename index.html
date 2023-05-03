@@ -28,7 +28,7 @@ const block_o_c = []
     var totalCubes = 50;
         for(var i=0; i<Math.sqrt(totalCubes); i++){
           for(var j=0; j<Math.sqrt(totalCubes); j++){
-            for(var height = 0; height <= Math.ceil((noise(i*0.05, height*0.05, j*0.05) * 80) + 45); height++){
+            for(var height = 0; height <= Math.ceil((noise(i*0.05, height*0.05, j*0.05) * 30) + 5); height++){
             var geometry = new THREE.BoxGeometry(1, 1, 1)
             var material = new THREE.MeshLambertMaterial({color: "green"})
             var cloud = new THREE.Mesh(geometry, material)
@@ -55,8 +55,15 @@ const block_o_c = []
       magma.position.set(0, 10, 0)
 scene.add(magma)
 
-    
+   
+var raycaster = new THREE.Raycaster();
+var downDirection = new THREE.Vector3(0, -1, 0);
       var render = function () {
+        raycaster.set(camra.position, downDirection)
+        const intersects = raycaster.intersectObjects(scene.children);
+        if(intersects.length > 0 && intersects[0].distance > 3){
+          camra.position.y-=0.2;
+        }
         requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
