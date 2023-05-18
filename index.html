@@ -112,8 +112,11 @@ document.body.requestPointerLock = document.body.requestPointerLock ||
 
 
 document.body.onmousemove = function(evt) {
-    camera.rotation.y-=evt.movementX/65;
-    //if(Math.abs(camera.rotation.x)<1){camera.rotation.x-=evt.movementY/65;}else{camera.rotation.x-=(camera.rotation.x/Math.abs(camera.rotation.x))/100}
+  camera.rotation.order = "YXZ"
+    yStore = camera.rotation.y;
+    camera.rotation.y = 0;
+    camera.rotation.x-=evt.movementY/100;
+    camera.rotation.y = yStore - evt.movementX/65;
   };
 
   $(document.body).keydown(function (evt) {
@@ -168,15 +171,13 @@ document.body.onmousemove = function(evt) {
 
 
 
-
-document.addEventListener("click", function(evt){
+  document.addEventListener("click", function(evt){
   if(evt.button == 2){
     var direction = new THREE.Vector3();
     camera.getWorldDirection( direction );
     raycaster.set(camera.position, direction);
     const intersects = raycaster.intersectObjects(scene.children)
     if(intersects.length > 0){
-      alert("why just why!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
       var face = intersects[0].face.normal;
       var position = intersects[0].object.position;
             var block = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshLambertMaterial({color: "green"}));
@@ -186,7 +187,19 @@ document.addEventListener("click", function(evt){
             scene.add(block);
     }
   }
+  if(evt.button == 0){
+    var direction = new THREE.Vector3();
+    camera.getWorldDirection( direction );
+    raycaster.set(camera.position, direction);
+    const intersects = raycaster.intersectObjects(scene.children)
+    if(intersects.length > 0){
+      var face = intersects[0].object;
+      scene.remove(face)
+    }
+  }
 })
+
+
 
 
 
